@@ -64,6 +64,34 @@ app.get('/api/movies/:id',(req, res)=>{
     })
 })
 
+//create a http put request
+//pull id out of url
+//but we want to interact with database 
+//so we use movie model
+//find paticular record and update
+app.put('/api/movies/:id', (req, res)=>{
+ console.log('Updating: '+req.params.id)
+ 
+ movieModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
+ (err, data)=>{
+ res.json(data);
+ })
+})
+
+//we want to get the id 
+//we integrate with the data by using the movie model
+//find the document in the database and match with the id being passed up
+//its gonna match on id and then a call back function
+//which will return back to our client
+//will return data once its deleted
+app.delete('/api/movies/:id',(req,res) => {
+
+   movieModel.findByIdAndDelete(req.params.id,(err,data) =>{
+       res.send(data);
+   })
+})
+
+
 app.get('/api/movies', (req, res) => {
     movieModel.find((err, data)=>{
         res.json(data);
